@@ -67,5 +67,13 @@ namespace ReconstructionTask
                 throw ex;
             }
         }
+
+        public void Clear()
+        {
+            inputdata.Clear();
+            fabrics.Clear();
+            Product_in_total.Clear();
+            Product_in_Command.Clear();
+        }
     }
 }

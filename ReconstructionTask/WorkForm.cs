@@ -40,13 +40,16 @@ namespace ReconstructionTask
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 var filePath = openFileDialog1.FileName;
+                inputData.Clear();
                 inputData.ReadDataFromPath(filePath);
                 textBox1.Text = openFileDialog1.FileName;
+                button3.Enabled = true;
             }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+            richTextBox1.Clear();
             if (textBox1.Text.Length != 0 && openFileDialog1.CheckFileExists)
             {
                 var algoResults1 = GreedyAlgo.Calculate(inputData);
@@ -57,6 +60,8 @@ namespace ReconstructionTask
                 richTextBox1.Text += array + "\n";
                 richTextBox1.Text += "Summary cost of reconstructions: ";
                 richTextBox1.Text += algoResults1.SummaryFunctionResult.ToString();
+                button3.Enabled = false;
+                inputData.Clear();
             }
             else richTextBox1.Text = "Error! File not found or data incorrect";
         }
@@ -68,6 +73,8 @@ namespace ReconstructionTask
                 var filePath = "../../file.txt";
                 inputData.ReadDataFromPath(filePath);
                 textBox1.Text = "../../file.txt";
+                button3.Enabled = true;
+
             }
             catch (Exception ex)
             {
