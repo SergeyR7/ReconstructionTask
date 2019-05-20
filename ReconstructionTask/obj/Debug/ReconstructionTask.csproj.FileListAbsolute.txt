@@ -1,0 +1,12 @@
+D:\Projects\ReconstructionTask\ReconstructionTask\bin\Debug\ReconstructionTask.exe.config
+D:\Projects\ReconstructionTask\ReconstructionTask\bin\Debug\ReconstructionTask.exe
+D:\Projects\ReconstructionTask\ReconstructionTask\bin\Debug\ReconstructionTask.pdb
+D:\Projects\ReconstructionTask\ReconstructionTask\obj\Debug\ReconstructionTask.csprojAssemblyReference.cache
+D:\Projects\ReconstructionTask\ReconstructionTask\obj\Debug\ReconstructionTask.Main.resources
+D:\Projects\ReconstructionTask\ReconstructionTask\obj\Debug\ReconstructionTask.Properties.Resources.resources
+D:\Projects\ReconstructionTask\ReconstructionTask\obj\Debug\ReconstructionTask.WorkForm.resources
+D:\Projects\ReconstructionTask\ReconstructionTask\obj\Debug\ReconstructionTask.csproj.GenerateResource.cache
+D:\Projects\ReconstructionTask\ReconstructionTask\obj\Debug\ReconstructionTask.csproj.CoreCompileInputs.cache
+D:\Projects\ReconstructionTask\ReconstructionTask\obj\Debug\ReconstructionTask.exe
+D:\Projects\ReconstructionTask\ReconstructionTask\obj\Debug\ReconstructionTask.pdb
+D:\Projects\ReconstructionTask\ReconstructionTask\obj\Debug\ReconstructionTask.AboutForm.resources
