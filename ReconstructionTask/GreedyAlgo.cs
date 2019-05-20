@@ -24,8 +24,11 @@ namespace ReconstructionTask
             var Product_in_Command = inputData.Product_in_Command;
             var inputdata = inputData.inputdata;
             var fabrics = inputData.fabrics;
+            int C=0;
             while (Compare(Product_in_total, Product_in_Command))
             {
+                C = 0;
+                for (int i = 0; i < inputdata[2]; i++) Product_in_total[i] = 0;
                 foreach (Fabric f in fabrics)
                 {
                     int min = 9999;
@@ -49,6 +52,7 @@ namespace ReconstructionTask
                         {
                             Product_in_total[x - 1] += f.Bool_Product_Reconstruction_Price[i][x] * f.Bool_Product_Reconstruction_Price[i][0];
                         }
+                        C += f.Bool_Product_Reconstruction_Price[i][inputdata[2] + 1] * f.Bool_Product_Reconstruction_Price[i][0];
                     }
 
 
@@ -70,7 +74,7 @@ namespace ReconstructionTask
                     arr.Add(System.Convert.ToBoolean(t[0]));
                 }
             }
-            return new AlgoResults(arr.ToArray(), 0, Product_in_total);
+            return new AlgoResults(arr.ToArray(), C, Product_in_total);
 
         }
     }
