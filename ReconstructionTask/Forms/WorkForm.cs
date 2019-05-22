@@ -37,6 +37,9 @@ namespace ReconstructionTask
 
         private void button1_Click(object sender, EventArgs e)
         {
+            openFileDialog1.Filter = "input files (*.txt)|*.txt|All files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 1;
+            openFileDialog1.RestoreDirectory = true;
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 var filePath = openFileDialog1.FileName;
@@ -58,12 +61,21 @@ namespace ReconstructionTask
             }
         }
 
+    
+
         private async void button3_Click(object sender, EventArgs e)
         {
+
             richTextBox1.Clear();
             if (textBox1.Text.Length != 0 && openFileDialog1.CheckFileExists)
             {
-                var algoResults1 =await GreedyAlgo.Calculate(inputData);
+                label2.Visible = true;
+                Task<AlgoResults> t1 = Task<AlgoResults>.Run(() => GreedyAlgo.Calculate(inputData));
+                //Task<AlgoResults> t2 = Task<AlgoResults>.Run(() => ABCAlgo.Calculate(inputData));
+                //Task<AlgoResults> t3 = Task<AlgoResults>.Run(() => CapitalAlgo.Calculate(inputData));
+                await Task.WhenAll(new[] { t1/*, t2, t3*/ });
+                label2.Visible = false;
+                var algoResults1 = t1.Result;
                 richTextBox1.Text = "Reconstruction plan: \n";
                 string recons = "";
                 foreach (var s in algoResults1.ReconstructionPlan) recons += s.ToString();

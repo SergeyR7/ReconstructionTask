@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ReconstructionTask
 {
-    class AlgoResults
+    public class AlgoResults
     {
         public bool[] ReconstructionPlan { get; set; }
         public float SummaryFunctionResult { get; set; }

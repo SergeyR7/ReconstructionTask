@@ -47,6 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\ABCAlgo.cs" />
+    <Compile Include="Algorithms\CapitalAlgo.cs" />
     <Compile Include="Forms\AboutInput.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,9 +112,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\inputExample.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ExampleInput.png" />
