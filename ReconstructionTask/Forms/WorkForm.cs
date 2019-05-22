@@ -41,25 +41,36 @@ namespace ReconstructionTask
             {
                 var filePath = openFileDialog1.FileName;
                 inputData.Clear();
-                inputData.ReadDataFromPath(filePath);
-                textBox1.Text = openFileDialog1.FileName;
-                button3.Enabled = true;
+                try
+                {
+                    inputData.ReadDataFromPath(filePath);
+                    textBox1.Text = openFileDialog1.FileName;
+                    button3.Enabled = true;
+                }
+                catch(Exception ex)
+                {
+                    richTextBox1.Text = ex.Message;
+                    richTextBox2.Text = ex.Message;
+                    richTextBox3.Text = ex.Message;
+                    button3.Enabled = false;
+                }
+                
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private async void button3_Click(object sender, EventArgs e)
         {
             richTextBox1.Clear();
             if (textBox1.Text.Length != 0 && openFileDialog1.CheckFileExists)
             {
-                var algoResults1 = GreedyAlgo.Calculate(inputData);
+                var algoResults1 =await GreedyAlgo.Calculate(inputData);
                 richTextBox1.Text = "Reconstruction plan: \n";
                 string recons = "";
                 foreach (var s in algoResults1.ReconstructionPlan) recons += s.ToString();
                 var array = recons.Replace("True", " 1 ").Replace("False", " 0 ");
                 richTextBox1.Text += array + "\n";
                 richTextBox1.Text += "Summary cost of reconstructions: ";
-                richTextBox1.Text += algoResults1.SummaryFunctionResult.ToString();
+                richTextBox1.Text += algoResults1.SummaryFunctionResult.ToString();     
                 button3.Enabled = false;
                 inputData.Clear();
             }
@@ -80,6 +91,14 @@ namespace ReconstructionTask
             {
                 throw ex;
             }
-            }
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Form aboutInput = new AboutInput(this);
+            aboutInput.Show();
+            linkLabel1.LinkVisited = true;
+            this.Hide();
+        }
     }
 }
