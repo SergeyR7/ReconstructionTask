@@ -43,6 +43,7 @@
             this.richTextBox3 = new System.Windows.Forms.RichTextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.button4 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -197,7 +198,7 @@
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Cursor = System.Windows.Forms.Cursors.Help;
             this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel1.Location = new System.Drawing.Point(497, 25);
+            this.linkLabel1.Location = new System.Drawing.Point(501, 24);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(168, 20);
             this.linkLabel1.TabIndex = 13;
@@ -205,12 +206,26 @@
             this.linkLabel1.Text = "About correct input file";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.button4.Font = new System.Drawing.Font("Segoe UI Symbol", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.button4.Location = new System.Drawing.Point(16, 58);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(230, 26);
+            this.button4.TabIndex = 14;
+            this.button4.Text = "Generate random file";
+            this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // WorkForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Honeydew;
             this.ClientSize = new System.Drawing.Size(782, 476);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.richTextBox3);
@@ -251,5 +266,6 @@
         private System.Windows.Forms.RichTextBox richTextBox3;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Button button4;
     }
 }

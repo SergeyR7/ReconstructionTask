@@ -8,5 +8,10 @@ namespace ReconstructionTask.Algorithms
 {
     class CapitalAlgo
     {
+        public static void Calculate(InputData inputData)
+        {
+
+        }
+        
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,8 @@ namespace ReconstructionTask
             var inputdata = inputData.inputdata;
             var fabrics = inputData.fabrics;
             int C = 0;
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
             while (Compare(Product_in_total, Product_in_Command))
             {
                 C = 0;
@@ -74,7 +77,8 @@ namespace ReconstructionTask
                     arr.Add(System.Convert.ToBoolean(t[0]));
                 }
             }
-            return new AlgoResults(arr.ToArray(), C, Product_in_total);
+            watch.Stop();
+            return new AlgoResults(arr.ToArray(), C, watch.ElapsedMilliseconds,Product_in_total);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReconstructionTask.Algorithms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -65,10 +66,10 @@ namespace ReconstructionTask
 
         private async void button3_Click(object sender, EventArgs e)
         {
-
             richTextBox1.Clear();
             if (textBox1.Text.Length != 0 && openFileDialog1.CheckFileExists)
             {
+                button3.Enabled = false;
                 label2.Visible = true;
                 Task<AlgoResults> t1 = Task<AlgoResults>.Run(() => GreedyAlgo.Calculate(inputData));
                 //Task<AlgoResults> t2 = Task<AlgoResults>.Run(() => ABCAlgo.Calculate(inputData));
@@ -82,8 +83,8 @@ namespace ReconstructionTask
                 var array = recons.Replace("True", " 1 ").Replace("False", " 0 ");
                 richTextBox1.Text += array + "\n";
                 richTextBox1.Text += "Summary cost of reconstructions: ";
-                richTextBox1.Text += algoResults1.SummaryFunctionResult.ToString();     
-                button3.Enabled = false;
+                richTextBox1.Text += algoResults1.SummaryFunctionResult.ToString();
+                richTextBox1.Text += "\nTime Elapsed :  " + algoResults1.Ms + " ms";
                 inputData.Clear();
             }
             else richTextBox1.Text = "Error! File not found or data incorrect";
@@ -93,10 +94,12 @@ namespace ReconstructionTask
         {
             try
             {
+                inputData.Clear();
                 var filePath = "../../file.txt";
                 inputData.ReadDataFromPath(filePath);
                 textBox1.Text = "../../file.txt";
                 button3.Enabled = true;
+                button3.ForeColor = Color.Black;
 
             }
             catch (Exception ex)
@@ -111,6 +114,25 @@ namespace ReconstructionTask
             aboutInput.Show();
             linkLabel1.LinkVisited = true;
             this.Hide();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                inputData.Clear();
+                var nameFile = InputGenerator.GenerateAbsolutelyRandomFile();
+                var filePath = nameFile;
+                inputData.ReadDataFromPath(filePath);
+                textBox1.Text = "/RandomFile.txt";
+                button3.Enabled = true;
+                button3.ForeColor = Color.Black;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

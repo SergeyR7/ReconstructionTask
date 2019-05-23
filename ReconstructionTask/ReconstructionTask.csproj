@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Algorithms\ABCAlgo.cs" />
     <Compile Include="Algorithms\CapitalAlgo.cs" />
+    <Compile Include="Algorithms\InputGenerator.cs" />
     <Compile Include="Forms\AboutInput.cs">
       <SubType>Form</SubType>
     </Compile>
