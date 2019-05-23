@@ -124,10 +124,9 @@ namespace ReconstructionTask
                 var nameFile = InputGenerator.GenerateAbsolutelyRandomFile();
                 var filePath = nameFile;
                 inputData.ReadDataFromPath(filePath);
-                textBox1.Text = "/RandomFile.txt";
+                textBox1.Text = "(bin->debug)/"+nameFile ;
                 button3.Enabled = true;
                 button3.ForeColor = Color.Black;
-
             }
             catch (Exception ex)
             {
