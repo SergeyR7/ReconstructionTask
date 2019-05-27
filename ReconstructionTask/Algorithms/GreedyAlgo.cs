@@ -21,13 +21,14 @@ namespace ReconstructionTask
         }
         public static AlgoResults Calculate(InputData inputData)
         {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
             var Product_in_total = inputData.Product_in_total;
             var Product_in_Command = inputData.Product_in_Command;
             var inputdata = inputData.inputdata;
             var fabrics = inputData.fabrics;
             int C = 0;
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
+            
             while (Compare(Product_in_total, Product_in_Command))
             {
                 C = 0;

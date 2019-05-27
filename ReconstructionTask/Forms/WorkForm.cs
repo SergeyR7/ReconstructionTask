@@ -121,10 +121,35 @@ namespace ReconstructionTask
             try
             {
                 inputData.Clear();
-                var nameFile = InputGenerator.GenerateAbsolutelyRandomFile();
+                var nameFile = InputGenerator.GenerateAbsolutelyRandomFile(false);
                 var filePath = nameFile;
                 inputData.ReadDataFromPath(filePath);
                 textBox1.Text = "(bin->debug)/"+nameFile ;
+                button3.Enabled = true;
+                button3.ForeColor = Color.Black;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                label2.Visible = true;
+                inputData.Clear();
+                button3.Enabled = false;
+                this.Cursor= System.Windows.Forms.Cursors.WaitCursor;
+                var nameFile = InputGenerator.GenerateAbsolutelyRandomFile(true);
+                var filePath = nameFile;
+                inputData.ReadDataFromPath(filePath);
+                button3.Enabled = true;
+                label2.Visible = false;
+                this.Cursor = Cursors.Default;
+
+                textBox1.Text = "(bin->debug)/" + nameFile;
                 button3.Enabled = true;
                 button3.ForeColor = Color.Black;
             }

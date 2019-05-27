@@ -9,10 +9,22 @@ namespace ReconstructionTask.Algorithms
 {
     public class InputGenerator
     {
-        static public string GenerateAbsolutelyRandomFile()
+        static public string GenerateAbsolutelyRandomFile(bool isBig)
         {
             var rand = new Random();
-            var factoriesQty = rand.Next(5, 100);
+            int minValue;
+            int maxValue;
+            if (isBig)
+            {
+                minValue = 5000;
+                maxValue = 10000;
+            }
+            else
+            {
+                minValue = 5;
+                maxValue = 100;
+            }
+            var factoriesQty = rand.Next(minValue, maxValue);
             var typesOfProductsQty = rand.Next(3, 10);
             List<int> minSumms = new List<int>();
             for (int i = 0; i < typesOfProductsQty; i++)
