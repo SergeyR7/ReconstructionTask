@@ -136,9 +136,9 @@ namespace ReconstructionTask
 
         private void button5_Click(object sender, EventArgs e)
         {
+            label2.Visible = true;
             try
             {
-                label2.Visible = true;
                 inputData.Clear();
                 button3.Enabled = false;
                 this.Cursor= System.Windows.Forms.Cursors.WaitCursor;
