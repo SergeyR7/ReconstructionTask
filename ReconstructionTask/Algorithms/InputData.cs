@@ -12,7 +12,7 @@ namespace ReconstructionTask
         public List<List<int>> Bool_Product_Reconstruction_Price = new List<List<int>>();
     }
 
-    class InputData
+    public class InputData
     {
         public Fabric fabric = new Fabric();
         public List<int> inputdata = new List<int>(); 

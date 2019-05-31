@@ -117,4 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label3.Text" xml:space="preserve">
+    <value>1. Number of factories (n)
+2. Number of reconstructions  
+3. Number of products
+4. Number of reconstrurctions in first factory (m)
+5. Values of first reconstruction
+..
+j. Values of -m reconstruction
+..
+i. Values of -m reconstruction in -n factory
+last. Values of restrictions for product`s releases (b)</value>
+  </data>
 </root>

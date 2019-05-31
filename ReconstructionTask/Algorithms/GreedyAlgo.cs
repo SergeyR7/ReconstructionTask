@@ -19,14 +19,10 @@ namespace ReconstructionTask
             if (acc == a.Count) return true;
             return false;
         }
-        public static AlgoResults Calculate(InputData inputData)
+        public static AlgoResults Calculate(List<int> Product_in_total, List<int> Product_in_Command,List<int> inputdata,List<Fabric> fabrics)
         {
             Stopwatch watch = new Stopwatch();
             watch.Start();
-            var Product_in_total = inputData.Product_in_total;
-            var Product_in_Command = inputData.Product_in_Command;
-            var inputdata = inputData.inputdata;
-            var fabrics = inputData.fabrics;
             int C = 0;
             
             while (Compare(Product_in_total, Product_in_Command))

@@ -9,6 +9,9 @@ namespace ReconstructionTask.Algorithms
     public class ABCAlgo
     {
         
-
+        public AlgoResults Calculate(List<int> Product_in_total, List<int> Product_in_Command, List<int> inputdata, List<Fabric> fabrics)
+        {
+            return new AlgoResults( null, 0, 0);
+        }
     }
 }

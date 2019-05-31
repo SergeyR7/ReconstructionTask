@@ -71,10 +71,10 @@ namespace ReconstructionTask
             {
                 button3.Enabled = false;
                 label2.Visible = true;
-                Task<AlgoResults> t1 = Task<AlgoResults>.Run(() => GreedyAlgo.Calculate(inputData));
-                //Task<AlgoResults> t2 = Task<AlgoResults>.Run(() => ABCAlgo.Calculate(inputData));
+                Task<AlgoResults> t1 = Task<AlgoResults>.Run(() => GreedyAlgo.Calculate(inputData.Product_in_total,inputData.Product_in_Command,inputData.inputdata,inputData.fabrics));
+                Task<AlgoResults> t2 = Task<AlgoResults>.Run(() => new ABCAlgo().Calculate(inputData.Product_in_total, inputData.Product_in_Command, inputData.inputdata, inputData.fabrics));
                 //Task<AlgoResults> t3 = Task<AlgoResults>.Run(() => CapitalAlgo.Calculate(inputData));
-                await Task.WhenAll(new[] { t1/*, t2, t3*/ });
+                await Task.WhenAll(new[] { t1, t2/*, t3 */});
                 label2.Visible = false;
                 var algoResults1 = t1.Result;
                 richTextBox1.Text = "Reconstruction plan: \n";
@@ -85,6 +85,15 @@ namespace ReconstructionTask
                 richTextBox1.Text += "Summary cost of reconstructions: ";
                 richTextBox1.Text += algoResults1.SummaryFunctionResult.ToString();
                 richTextBox1.Text += "\nTime Elapsed :  " + algoResults1.Ms + " ms";
+                algoResults1 = t2.Result;
+                richTextBox2.Text = "Reconstruction plan: \n";
+                recons = "";
+                //foreach (var s in algoResults1.ReconstructionPlan) recons += s.ToString();
+                array = recons.Replace("True", " 2 ").Replace("False", " 0 ");
+                richTextBox2.Text += array + "\n";
+                richTextBox2.Text += "Summary cost of reconstructions: ";
+                richTextBox2.Text += algoResults1.SummaryFunctionResult.ToString();
+                richTextBox2.Text += "\nTime Elapsed :  " + algoResults1.Ms + " ms";
                 inputData.Clear();
             }
             else richTextBox1.Text = "Error! File not found or data incorrect";
@@ -136,7 +145,6 @@ namespace ReconstructionTask
 
         private void button5_Click(object sender, EventArgs e)
         {
-            label2.Visible = true;
             try
             {
                 inputData.Clear();
@@ -146,7 +154,6 @@ namespace ReconstructionTask
                 var filePath = nameFile;
                 inputData.ReadDataFromPath(filePath);
                 button3.Enabled = true;
-                label2.Visible = false;
                 this.Cursor = Cursors.Default;
 
                 textBox1.Text = "(bin->debug)/" + nameFile;
