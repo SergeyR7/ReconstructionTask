@@ -71,8 +71,10 @@ namespace ReconstructionTask
             {
                 button3.Enabled = false;
                 label2.Visible = true;
-                Task<AlgoResults> t1 = Task<AlgoResults>.Run(() => GreedyAlgo.Calculate(inputData.Product_in_total,inputData.Product_in_Command,inputData.inputdata,inputData.fabrics));
-                Task<AlgoResults> t2 = Task<AlgoResults>.Run(() => new ABCAlgo().Calculate(inputData.Product_in_total, inputData.Product_in_Command, inputData.inputdata, inputData.fabrics));
+                var inpdata2 = new InputData();
+                inpdata2.ReadDataFromPath(inputData.Path);
+                Task<AlgoResults> t1 = Task<AlgoResults>.Run(() => GreedyAlgo.Calculate(inputData.Product_in_total, inputData.Product_in_Command, inputData.inputdata, inputData.fabrics));
+                Task<AlgoResults> t2 = Task<AlgoResults>.Run(() => new ABCAlgo().Calculate(inpdata2.Product_in_total, inpdata2.Product_in_Command, inpdata2.inputdata, inpdata2.fabrics));
                 //Task<AlgoResults> t3 = Task<AlgoResults>.Run(() => CapitalAlgo.Calculate(inputData));
                 await Task.WhenAll(new[] { t1, t2/*, t3 */});
                 label2.Visible = false;
@@ -85,15 +87,15 @@ namespace ReconstructionTask
                 richTextBox1.Text += "Summary cost of reconstructions: ";
                 richTextBox1.Text += algoResults1.SummaryFunctionResult.ToString();
                 richTextBox1.Text += "\nTime Elapsed :  " + algoResults1.Ms + " ms";
-                algoResults1 = t2.Result;
+                var algoResults2 = t2.Result;
                 richTextBox2.Text = "Reconstruction plan: \n";
                 recons = "";
-                //foreach (var s in algoResults1.ReconstructionPlan) recons += s.ToString();
-                array = recons.Replace("True", " 2 ").Replace("False", " 0 ");
+                foreach (var s in algoResults2.ReconstructionPlan) recons += s.ToString();
+                array = recons.Replace("True", " 1 ").Replace("False", " 0 ");
                 richTextBox2.Text += array + "\n";
                 richTextBox2.Text += "Summary cost of reconstructions: ";
-                richTextBox2.Text += algoResults1.SummaryFunctionResult.ToString();
-                richTextBox2.Text += "\nTime Elapsed :  " + algoResults1.Ms + " ms";
+                richTextBox2.Text += algoResults2.SummaryFunctionResult.ToString();
+                richTextBox2.Text += "\nTime Elapsed :  " + algoResults2.Ms + " ms";
                 inputData.Clear();
             }
             else richTextBox1.Text = "Error! File not found or data incorrect";

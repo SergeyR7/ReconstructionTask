@@ -7,11 +7,19 @@ using System.Threading.Tasks;
 
 namespace ReconstructionTask
 {
-    public class Fabric 
+    public class Fabric // клас произвотства(фабрики)
     {
-        public List<List<int>> Bool_Product_Reconstruction_Price = new List<List<int>>();
-    }
+        public List<List<int>> Bool_Product_Reconstruction_Price;
+        public Fabric()
+        {
+            Bool_Product_Reconstruction_Price = new List<List<int>>();
+        }
+        public Fabric(Fabric f)
+        {
+            Bool_Product_Reconstruction_Price = new List<List<int>>(f.Bool_Product_Reconstruction_Price);
+        }
 
+    }
     public class InputData
     {
         public Fabric fabric = new Fabric();
@@ -19,8 +27,10 @@ namespace ReconstructionTask
         public List<Fabric> fabrics = new List<Fabric>(); 
         public List<int> Product_in_total = new List<int>();
         public List<int> Product_in_Command = new List<int>();
+        public string Path = "";
         public void ReadDataFromPath(string filePath)
         {
+            Path = filePath;
             FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
             {

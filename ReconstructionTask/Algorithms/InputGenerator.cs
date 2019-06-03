@@ -16,8 +16,8 @@ namespace ReconstructionTask.Algorithms
             int maxValue;
             if (isBig)
             {
-                minValue = 5000;
-                maxValue = 10000;
+                minValue = 100;
+                maxValue = 500;
             }
             else
             {
