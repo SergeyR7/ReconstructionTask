@@ -1,4 +1,5 @@
 ﻿using ReconstructionTask.Algorithms;
+using ReconstructionTask.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,10 +22,7 @@ namespace ReconstructionTask
             InitializeComponent();
         }
 
-        private void label6_Click(object sender, EventArgs e)
-        {
 
-        }
 
         private void WorkForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -62,7 +60,23 @@ namespace ReconstructionTask
             }
         }
 
-    
+        public void InputDataForGenerate(int fact,int pr)
+        {
+            try
+            {
+                inputData.Clear();
+                var nameFile = InputGenerator.GenerateFile(fact,pr);
+                var filePath = nameFile;
+                inputData.ReadDataFromPath(filePath);
+                textBox1.Text = "(bin->debug)/" + nameFile;
+                button3.Enabled = true;
+                button3.ForeColor = Color.Black;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         private async void button3_Click(object sender, EventArgs e)
         {
@@ -71,31 +85,40 @@ namespace ReconstructionTask
             {
                 button3.Enabled = false;
                 label2.Visible = true;
-                var inpdata2 = new InputData();
-                inpdata2.ReadDataFromPath(inputData.Path);
+                var inpdata2 = inputData.Clone();
+                var inpdata3 = inputData.Clone();
                 Task<AlgoResults> t1 = Task<AlgoResults>.Run(() => GreedyAlgo.Calculate(inputData.Product_in_total, inputData.Product_in_Command, inputData.inputdata, inputData.fabrics));
                 Task<AlgoResults> t2 = Task<AlgoResults>.Run(() => new ABCAlgo().Calculate(inpdata2.Product_in_total, inpdata2.Product_in_Command, inpdata2.inputdata, inpdata2.fabrics));
-                //Task<AlgoResults> t3 = Task<AlgoResults>.Run(() => CapitalAlgo.Calculate(inputData));
-                await Task.WhenAll(new[] { t1, t2/*, t3 */});
+                Task<AlgoResults> t3 = Task<AlgoResults>.Run(() => new ABCAlgo_Updated().Calculate(inpdata3.Product_in_total, inpdata3.Product_in_Command, inpdata3.inputdata, inpdata3.fabrics));
+                await Task.WhenAll(new[] { t1, t2, t3 });
                 label2.Visible = false;
-                var algoResults1 = t1.Result;
+                var algoResults = t1.Result;
                 richTextBox1.Text = "Reconstruction plan: \n";
                 string recons = "";
-                foreach (var s in algoResults1.ReconstructionPlan) recons += s.ToString();
+                foreach (var s in algoResults.ReconstructionPlan) recons += s.ToString();
                 var array = recons.Replace("True", " 1 ").Replace("False", " 0 ");
                 richTextBox1.Text += array + "\n";
                 richTextBox1.Text += "Summary cost of reconstructions: ";
-                richTextBox1.Text += algoResults1.SummaryFunctionResult.ToString();
-                richTextBox1.Text += "\nTime Elapsed :  " + algoResults1.Ms + " ms";
-                var algoResults2 = t2.Result;
+                richTextBox1.Text += algoResults.SummaryFunctionResult.ToString();
+                richTextBox1.Text += "\nTime Elapsed :  " + algoResults.Ms + " ms";
+                algoResults = t2.Result;
                 richTextBox2.Text = "Reconstruction plan: \n";
                 recons = "";
-                foreach (var s in algoResults2.ReconstructionPlan) recons += s.ToString();
+                foreach (var s in algoResults.ReconstructionPlan) recons += s.ToString();
                 array = recons.Replace("True", " 1 ").Replace("False", " 0 ");
                 richTextBox2.Text += array + "\n";
                 richTextBox2.Text += "Summary cost of reconstructions: ";
-                richTextBox2.Text += algoResults2.SummaryFunctionResult.ToString();
-                richTextBox2.Text += "\nTime Elapsed :  " + algoResults2.Ms + " ms";
+                richTextBox2.Text += algoResults.SummaryFunctionResult.ToString();
+                richTextBox2.Text += "\nTime Elapsed :  " + algoResults.Ms + " ms";
+                algoResults = t3.Result;
+                richTextBox3.Text = "Reconstruction plan: \n";
+                recons = "";
+                foreach (var s in algoResults.ReconstructionPlan) recons += s.ToString();
+                array = recons.Replace("True", " 1 ").Replace("False", " 0 ");
+                richTextBox3.Text += array + "\n";
+                richTextBox3.Text += "Summary cost of reconstructions: ";
+                richTextBox3.Text += algoResults.SummaryFunctionResult.ToString();
+                richTextBox3.Text += "\nTime Elapsed :  " + algoResults.Ms + " ms";
                 inputData.Clear();
             }
             else richTextBox1.Text = "Error! File not found or data incorrect";
@@ -166,6 +189,35 @@ namespace ReconstructionTask
             {
                 throw ex;
             }
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+            AboutForm form = new AboutForm(this);
+            form.Show();
+            this.Hide();
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+            AboutForm form = new AboutForm(this);
+            form.Show();
+            this.Hide();
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+            AboutForm form = new AboutForm(this);
+            form.Show();
+            this.Hide();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            InputFormPopUp popUp = new InputFormPopUp(this);
+            popUp.Show();
+            this.Enabled = false;
         }
     }
 }

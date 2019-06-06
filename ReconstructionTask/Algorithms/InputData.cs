@@ -71,8 +71,13 @@ namespace ReconstructionTask
                 }
             }
         }
-        
 
+        public InputData Clone()
+        {
+            var newdata = new InputData();
+            newdata.ReadDataFromPath(Path);
+            return newdata;
+        }
         public void Clear()
         {
             inputdata.Clear();

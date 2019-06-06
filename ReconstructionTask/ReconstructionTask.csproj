@@ -47,8 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\ABCAlgo _Updated.cs" />
     <Compile Include="Algorithms\ABCAlgo.cs" />
-    <Compile Include="Algorithms\CapitalAlgo.cs" />
     <Compile Include="Algorithms\InputGenerator.cs" />
     <Compile Include="Forms\AboutInput.cs">
       <SubType>Form</SubType>
@@ -65,6 +65,12 @@
     <Compile Include="Algorithms\AlgoResults.cs" />
     <Compile Include="Algorithms\GreedyAlgo.cs" />
     <Compile Include="Algorithms\InputData.cs" />
+    <Compile Include="Forms\InputFormPopUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\InputFormPopUp.Designer.cs">
+      <DependentUpon>InputFormPopUp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,6 +90,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\InputFormPopUp.resx">
+      <DependentUpon>InputFormPopUp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>

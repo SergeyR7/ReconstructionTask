@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ReconstructionTask.Algorithms
 {
-    public class ABCAlgo
+    public class ABCAlgo_Updated
     {
         public class Hive
         {
@@ -114,13 +114,79 @@ namespace ReconstructionTask.Algorithms
             }
 
 
-         
-
-            public void Solve()
+            private bool SRAAAAAV(List<List<int>> l1, List<List<int>> l2)
             {
+                if (l1.Count != l2.Count) return false;
+                else
+                {
+                    for (int i = 0; i < l1.Count; i++)
+                    {
+                        if (l1[i].Count != l2[i].Count) return false;
+                        else
+                        {
+                            for (int j = 0; j < l1[i].Count; j++)
+                            {
+                                if (l1[i][j] != l2[i][j]) return false;
+                            }
+                        }
+                    }
+                }
+
+
+                return true;
+            }
+
+            public List<Bee> ForSolve()
+            {
+                rnd = new Random();
+                int s = rnd.Next(0, startFabtic.Count);
+                for (int random = 0; random < s; random++)
+                {
+                    rnd = new Random();
+                    foreach (Bee eb in bestbees)
+                    {
+                        int g = rnd.Next(0, startFabtic.Count);
+                        Fabric fabric = new Fabric(startFabtic[g]);
+                        int count = 0;
+                        for (int fabs = 0; fabs < startFabtic.Count; fabs++)
+                        {
+                            if (SRAAAAAV(startFabtic[fabs].Bool_Product_Reconstruction_Price, fabric.Bool_Product_Reconstruction_Price))
+                            {
+                                int min = 999999;
+                                for (int fabsrow = count; fabsrow < count + startFabtic[fabs].Bool_Product_Reconstruction_Price.Count; fabsrow++)
+                                {
+                                    if (fabric.Bool_Product_Reconstruction_Price[fabsrow - count][fabric.Bool_Product_Reconstruction_Price[fabsrow - count].Count - 1] <= min)
+                                    {
+                                        min = fabric.Bool_Product_Reconstruction_Price[fabsrow - count][fabric.Bool_Product_Reconstruction_Price[fabsrow - count].Count - 1];
+                                        for (int h = count; h < count + startFabtic[fabs].Bool_Product_Reconstruction_Price.Count; h++) eb.plan[h] = 0;
+                                        eb.plan[fabsrow] = 1;
+                                        eb.LCF -= 0 /*тут нужна стоимость реконструкции где стояла единичка*/;
+                                        eb.LCF += 0 /*тут соответственно стоимость реконструкции где единичка стоит теперь*/;
+                                        // после этого алгоритм будет лучшим в мире
+
+                                    }
+                                }
+                            }
+                            count += startFabtic[fabs].Bool_Product_Reconstruction_Price.Count;
+                        }
+                    }
+                }
+                return bestbees;
+
+            }
+
+            public Bee Solve()
+            {
+                List<List<Bee>> solutionMatrix = new List<List<Bee>>();
+                for (int i = 0; i < 10; i++)
+                {
                     InitialPlan();
                     InitialLCF();
                     BestInit();
+                    solutionMatrix.Add(ForSolve());
+                }
+                var outListBee = solutionMatrix.Where(a => a[0].LCF == solutionMatrix.Min(b => b[0].LCF)).FirstOrDefault();
+                return outListBee[0];
             }
         }
 
@@ -152,11 +218,11 @@ namespace ReconstructionTask.Algorithms
             Stopwatch watch = new Stopwatch();
             watch.Start();
             Hive hive = new Hive(fabrics, Product_in_Command);
-            hive.Solve();
+            Bee bestBee=hive.Solve();
             var res = new List<bool>();
-            foreach (var b in hive.bestbees[0].plan) res.Add(System.Convert.ToBoolean(b));
+            foreach (var b in bestBee.plan) res.Add(System.Convert.ToBoolean(b));
             watch.Stop();
-            return new AlgoResults(res.ToArray(), hive.bestbees[0].LCF, watch.ElapsedMilliseconds);
+            return new AlgoResults(res.ToArray(), bestBee.LCF, watch.ElapsedMilliseconds);
         }
     }
 }
