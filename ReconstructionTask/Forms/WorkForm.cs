@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -84,14 +85,13 @@ namespace ReconstructionTask
             if (textBox1.Text.Length != 0 && openFileDialog1.CheckFileExists)
             {
                 button3.Enabled = false;
-                label2.Visible = true;
                 var inpdata2 = inputData.Clone();
                 var inpdata3 = inputData.Clone();
-                Task<AlgoResults> t1 = Task<AlgoResults>.Run(() => GreedyAlgo.Calculate(inputData.Product_in_total, inputData.Product_in_Command, inputData.inputdata, inputData.fabrics));
+                this.Cursor = System.Windows.Forms.Cursors.WaitCursor;
+                Task<AlgoResults> t1 = Task<AlgoResults>.Run(() => new GreedyAlgo().Calculate(inputData.Product_in_total, inputData.Product_in_Command, inputData.inputdata, inputData.fabrics));
                 Task<AlgoResults> t2 = Task<AlgoResults>.Run(() => new ABCAlgo().Calculate(inpdata2.Product_in_total, inpdata2.Product_in_Command, inpdata2.inputdata, inpdata2.fabrics));
                 Task<AlgoResults> t3 = Task<AlgoResults>.Run(() => new ABCAlgo_Updated().Calculate(inpdata3.Product_in_total, inpdata3.Product_in_Command, inpdata3.inputdata, inpdata3.fabrics));
                 await Task.WhenAll(new[] { t1, t2, t3 });
-                label2.Visible = false;
                 var algoResults = t1.Result;
                 richTextBox1.Text = "Reconstruction plan: \n";
                 string recons = "";
@@ -120,6 +120,8 @@ namespace ReconstructionTask
                 richTextBox3.Text += algoResults.SummaryFunctionResult.ToString();
                 richTextBox3.Text += "\nTime Elapsed :  " + algoResults.Ms + " ms";
                 inputData.Clear();
+                this.Cursor = System.Windows.Forms.Cursors.Default;
+
             }
             else richTextBox1.Text = "Error! File not found or data incorrect";
         }
@@ -219,5 +221,74 @@ namespace ReconstructionTask
             popUp.Show();
             this.Enabled = false;
         }
+
+        private async void button7_Click(object sender, EventArgs e)
+        {
+            int factoriesQty = 4;
+            int typesOfProductsQty = 5;
+            const int iterations = 100;  //change here the quantity of tasks
+            long[] msForGreedyAlgo = new long[iterations];
+            long[] msForABCAlgo = new long[iterations];
+            long[] msForABCUAlgo = new long[iterations];
+            float[] SFRForGreedyAlgo = new float[iterations];
+            float[] SFRForABCAlgo = new float[iterations];
+            float[] SFRForABCUAlgo = new float[iterations];
+
+            this.Cursor = Cursors.WaitCursor;
+            for (int i = 0; i < iterations; i++)
+            {
+                inputData.Clear();
+                var path = InputGenerator.GenerateFile(factoriesQty + i, typesOfProductsQty);
+                inputData.ReadDataFromPath(path);
+                textBox1.Text = path;
+                var inpdata2 = inputData.Clone();
+                var inpdata3 = inputData.Clone();
+                this.Cursor = System.Windows.Forms.Cursors.WaitCursor;
+                Task<AlgoResults> t1 = Task<AlgoResults>.Run(() => new GreedyAlgo().Calculate(inputData.Product_in_total, inputData.Product_in_Command, inputData.inputdata, inputData.fabrics));
+                Task<AlgoResults> t2 = Task<AlgoResults>.Run(() => new ABCAlgo().Calculate(inpdata2.Product_in_total, inpdata2.Product_in_Command, inpdata2.inputdata, inpdata2.fabrics));
+                Task<AlgoResults> t3 = Task<AlgoResults>.Run(() => new ABCAlgo_Updated().Calculate(inpdata3.Product_in_total, inpdata3.Product_in_Command, inpdata3.inputdata, inpdata3.fabrics));
+                await Task.WhenAll(new[] { t1, t2, t3 });
+                msForGreedyAlgo[i] = t1.Result.Ms;
+                msForABCAlgo[i] = t2.Result.Ms;
+                msForABCUAlgo[i] = t3.Result.Ms;
+                SFRForGreedyAlgo[i] = t1.Result.SummaryFunctionResult;
+                SFRForABCAlgo[i] = t2.Result.SummaryFunctionResult;
+                SFRForABCUAlgo[i] = t3.Result.SummaryFunctionResult;
+                File.Delete(path);
+            }
+            ChartForm chart = new ChartForm(msForABCUAlgo);
+            chart.Show();
+            FileStream fileStream = new FileStream("GREEDY FOR EXCEL.txt", FileMode.OpenOrCreate, FileAccess.Write);
+            using (var streamWriter = new StreamWriter(fileStream, Encoding.UTF8))
+            {
+                for (int j = 0; j < iterations; j++)
+                {
+                    streamWriter.WriteLine(SFRForGreedyAlgo[j] + "                         " + msForGreedyAlgo[j]);
+                }
+            }
+            FileStream fileStream2 = new FileStream("ABC FOR EXCEL.txt", FileMode.OpenOrCreate, FileAccess.Write);
+            using (var streamWriter = new StreamWriter(fileStream2, Encoding.UTF8))
+            {
+                for (int j = 0; j < iterations; j++)
+                {
+                    streamWriter.WriteLine(SFRForABCAlgo[j] + "                         " + msForABCAlgo[j]);
+                }
+            }
+            FileStream fileStream3 = new FileStream("ABCU FOR EXCEL.txt", FileMode.OpenOrCreate, FileAccess.Write);
+            using (var streamWriter = new StreamWriter(fileStream3, Encoding.UTF8))
+            {
+                for (int j = 0; j < iterations; j++)
+                {
+                    streamWriter.WriteLine(SFRForABCUAlgo[j] + "                        " + msForABCUAlgo[j]);
+                }
+            }
+            this.Cursor = Cursors.Default;
+        }
+
+        private void WorkForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

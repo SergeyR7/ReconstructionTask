@@ -35,6 +35,7 @@
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.richTextBox3 = new System.Windows.Forms.RichTextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -77,30 +78,43 @@
             // 
             // richTextBox2
             // 
+            this.richTextBox2.BackColor = System.Drawing.Color.White;
             this.richTextBox2.Location = new System.Drawing.Point(138, 146);
             this.richTextBox2.Name = "richTextBox2";
             this.richTextBox2.ReadOnly = true;
             this.richTextBox2.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.richTextBox2.Size = new System.Drawing.Size(561, 126);
+            this.richTextBox2.Size = new System.Drawing.Size(596, 126);
             this.richTextBox2.TabIndex = 4;
             this.richTextBox2.Text = resources.GetString("richTextBox2.Text");
             // 
             // richTextBox3
             // 
+            this.richTextBox3.BackColor = System.Drawing.Color.White;
             this.richTextBox3.Location = new System.Drawing.Point(138, 290);
             this.richTextBox3.Name = "richTextBox3";
             this.richTextBox3.ReadOnly = true;
             this.richTextBox3.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.richTextBox3.Size = new System.Drawing.Size(561, 134);
+            this.richTextBox3.Size = new System.Drawing.Size(596, 134);
             this.richTextBox3.TabIndex = 5;
             this.richTextBox3.Text = resources.GetString("richTextBox3.Text");
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Segoe UI Symbol", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(12, 439);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(722, 25);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Подробнее об алгоритмах вы можете узнать в пояснительной записке\r\n";
             // 
             // AboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Honeydew;
-            this.ClientSize = new System.Drawing.Size(715, 446);
+            this.ClientSize = new System.Drawing.Size(754, 473);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.richTextBox3);
             this.Controls.Add(this.richTextBox2);
             this.Controls.Add(this.richTextBox1);
@@ -126,5 +140,6 @@
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.RichTextBox richTextBox2;
         private System.Windows.Forms.RichTextBox richTextBox3;
+        private System.Windows.Forms.Label label4;
     }
 }
